@@ -24,7 +24,7 @@ const AuthForm = ({ isLoginForm} : AuthFormProps)=>{
                 <CardHeader className="text-green-300 items-center text-6xl  font-bold ">Auth-Kit</CardHeader>
                 <CardContent>
                     {isLoginForm && <LoginFields/>}
-                    {!isLoginForm && <LoginFields/>}
+                    {!isLoginForm && <RegisterFields/>}
                 </CardContent>
 
             </Card>

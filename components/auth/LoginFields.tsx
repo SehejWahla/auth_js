@@ -14,8 +14,15 @@ import {  Form,
 
 import { Input } from "../ui/input"; 
 import { Button } from "../ui/button";
+import { Login } from "@/actions/login";
+import { useTransition,useState } from "react";
+import { FormError, FormSuccess } from "./authForm-prompts";
 
 export const LoginFields = () => {
+    const [isPending, startTransition] = useTransition()
+    const [error, setError] = useState<string | undefined>("")
+    const [success, setSuccess] = useState<string | undefined>("")
+    
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver:zodResolver(LoginSchema),
         defaultValues: {
@@ -27,6 +34,15 @@ export const LoginFields = () => {
 
     const onSubmit = (values : z.infer<typeof LoginSchema>)=>{
         console.log(values)
+        setSuccess("")
+        setError("")
+        startTransition(()=>{
+            Login(values).then((res)=>{    
+                setError(res.error)
+                setSuccess(res.success)
+            })
+        })
+
     }
     return <>
         <Form {...form}>
@@ -54,6 +70,8 @@ export const LoginFields = () => {
                         )}
                     />
                 </div>
+                <FormError message={error}/>
+                <FormSuccess message={success}/>
                 <Button type="submit" className="flex items-center justify-center w-full">Login</Button>
             </form>
         </Form>
