@@ -11,6 +11,7 @@ import
 
 import { LoginFields } from "./LoginFields";
 import { RegisterFields } from "./RegisterFields";
+import Link from 'next/link'
 
 interface AuthFormProps {
     isLoginForm? : boolean | undefined
@@ -25,6 +26,14 @@ const AuthForm = ({ isLoginForm} : AuthFormProps)=>{
                 <CardContent>
                     {isLoginForm && <LoginFields/>}
                     {!isLoginForm && <RegisterFields/>}
+                </CardContent>
+                <CardContent>
+                    {isLoginForm && 
+                        <div className="flex justify-center"><Link href="/auth/register">Dont have an account? Register</Link></div>
+                    }
+                    {!isLoginForm && 
+                        <div className="flex justify-center"><Link href="/auth/login">Already have an account? Login</Link></div>
+                    }
                 </CardContent>
 
             </Card>
